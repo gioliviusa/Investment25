@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberFrontiers - Cybersecurity Investment Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #0ff;
+            --neon-pink: #f0f;
+            --dark-bg: #0a0a12;
+            --section-padding: 8rem 2rem;
+            --glow: 0 0 15px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #000428 0%, #004e92 100%);
+            padding: 2rem;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 2rem;
+            animation: text-glow 2s infinite alternate;
+        }
+
+        .cta-button {
+            padding: 1rem 3rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            padding: var(--section-padding);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: var(--glow) var(--neon-cyan);
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            padding: var(--section-padding);
+            background: rgba(0,0,0,0.7);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--section-padding);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--neon-cyan);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: var(--glow) var(--neon-cyan);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.9);
+            padding: 4rem 2rem;
+            margin-top: 5rem;
+            border-top: 2px solid var(--neon-cyan);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--neon-cyan);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .social-links a {
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-pink);
+        }
+
+        .crypto-prices {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--neon-cyan);
+        }
+
+        .crypto-prices span {
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0,0,0,0.9);
+                flex-direction: column;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 10px var(--neon-cyan); }
+            100% { text-shadow: 0 0 30px var(--neon-pink); }
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax-hero {
+            background-image: url('https://picsum.photos/1920/1080?random=3');
+        }
+
+        .parallax-future-vision {
+            background-image: url('https://picsum.photos/1920/1080?random=2');
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-menu">
+            <div class="logo">CyberFrontiers</div>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#stats">Statistics</a>
+                <a href="#features">Solutions</a>
+                <a href="from.html">Open From Page</a>
+                <a href="#contact">Invest</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero parallax parallax-hero" id="hero">
+        <div class="hero-content">
+            <h1 class="neon-text">Secure Tomorrow's Digital Economy</h1>
+            <p class="subtitle">Join the $1.8 Trillion Cybersecurity Revolution</p>
+            <button class="cta-button">Start Investing Today</button>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-container" id="stats">
+        <div class="stat-item">
+            <div class="stat-number neon-text" data-target="1800">0</div>
+            <h3>Billion Market Value 2026</h3>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number neon-text" data-target="97">0</div>
+            <h3>Fortune 500 Partners</h3>
+        </div>
+    </section>
+
+    <!-- Innovation Section -->
+    <section class="innovation parallax" style="background-image: url('https://picsum.photos/1920/1080?random=1'); padding: var(--section-padding); text-align: center; color: white;">
+        <div class="content" style="max-width: 800px; margin: 0 auto;">
+            <h2 class="neon-text" style="font-size: 3rem; margin-bottom: 1.5rem;">Driving Innovation in Cybersecurity</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                At CyberFrontiers, we are committed to pushing the boundaries of what's possible in digital security. Our cutting-edge research and development initiatives are paving the way for a safer, more secure digital future.
+            </p>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                From advanced threat detection systems to next-generation encryption technologies, we are at the forefront of innovation, ensuring that your investments are protected in an ever-evolving digital landscape.
+            </p>
+            <button class="cta-button" style="margin-top: 2rem;">Learn More About Our Innovations</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-grid" id="features">
+        <div class="feature-card">
+            <i class="fas fa-shield-alt fa-3x neon-text"></i>
+            <h3>Quantum Encryption</h3>
+            <p>Post-quantum cryptographic solutions for future-proof security</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-brain fa-3x neon-text"></i>
+            <h3>AI Defense Networks</h3>
+            <p>Self-learning threat detection systems with 99.99% accuracy</p>
+        </div>
+    </section>
+
+    <!-- Updated Interest Rates Section -->
+    <section class="interest-rates" id="interest-rates" style="padding: var(--section-padding); text-align: center; background: rgba(0,0,0,0.8); color: white;">
+        <div class="content" style="max-width: 800px; margin: 0 auto;">
+            <h2 class="neon-text" style="font-size: 3rem; margin-bottom: 1.5rem;">Updated Interest Rates</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                Stay informed with the latest interest rates for your investments. Our platform ensures transparency and up-to-date information to help you make the best financial decisions.
+            </p>
+            <div class="rates-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="rate-card" style="padding: 2rem; border: 2px solid rgba(255,255,255,0.1);">
+                    <h3 style="margin-bottom: 1rem;">Short-Term Investments</h3>
+                    <p id="short-term-rate" style="font-size: 1.5rem; color: var(--neon-cyan);">Loading...</p>
+                </div>
+                <div class="rate-card" style="padding: 2rem; border: 2px solid rgba(255,255,255,0.1);">
+                    <h3 style="margin-bottom: 1rem;">Medium-Term Investments</h3>
+                    <p id="medium-term-rate" style="font-size: 1.5rem; color: var(--neon-cyan);">Loading...</p>
+                </div>
+                <div class="rate-card" style="padding: 2rem; border: 2px solid rgba(255,255,255,0.1);">
+                    <h3 style="margin-bottom: 1rem;">Long-Term Investments</h3>
+                    <p id="long-term-rate" style="font-size: 1.5rem; color: var(--neon-cyan);">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Vision Section -->
+    <section class="future-vision parallax parallax-future-vision" id="future-vision" style="color: white; padding: var(--section-padding); text-align: center;">
+        <div class="content" style="max-width: 800px; margin: 0 auto;">
+            <h2 class="neon-text" style="font-size: 3rem; margin-bottom: 1.5rem;">Envisioning the Future of Cybersecurity</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                At CyberFrontiers, we are not just adapting to the future; we are engineering it. Our groundbreaking innovations in quantum encryption and AI-driven defense systems are redefining the boundaries of digital security. Imagine a world where cyber threats are neutralized before they emerge, and your investments are safeguarded by the most advanced technologies ever conceived.
+            </p>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                Join us in pioneering a new era of cybersecurity, where visionary strategies and cutting-edge solutions converge to create a resilient and thriving digital economy. Together, we are building the infrastructure for a secure tomorrow, today.
+            </p>
+            <button class="cta-button" style="margin-top: 2rem;">Discover Our Vision</button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="cyber-border" style="padding: 2rem;">
+            <h2 class="neon-text" style="margin-bottom: 2rem;">Request Investor Package</h2>
+            <form id="investment-form">
+                <input type="text" class="form-input" placeholder="Full Name" required>
+                <input type="email" class="form-input" placeholder="Professional Email" required>
+                <select class="form-input" required>
+                    <option value="">Investment Level</option>
+                    <option>Accredited Investor ($100k+)</option>
+                    <option>Institutional ($1M+)</option>
+                    <option>Strategic Partner ($5M+)</option>
+                </select>
+                <button type="submit" class="cta-button">Get Exclusive Access</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>CyberFrontiers</h3>
+                <p>Pioneering cybersecurity solutions for the digital age</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-medium"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">White Papers</a></li>
+                    <li><a href="#">Market Reports</a></li>
+                    <li><a href="#">Investor Portal</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Global HQ: NYC</li>
+                    <li><i class="fas fa-envelope"></i> investors@cyberfrontiers.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (888) 555-1234</li>
+                </ul>
+            </div>
+        </div>
+        <div class="crypto-prices">
+            <h3>Live Crypto Prices</h3>
+            <span id="btc-price">BTC: Loading...</span>
+            <span id="eth-price">ETH: Loading...</span>
+            <span id="bnb-price">BNB: Loading...</span>
+            <span id="sol-price">SOL: Loading...</span>
+        </div>
+        <div class="crypto-prices">
+            <!-- <span>Bitcoin: $50,000</span>
+            <span>Ethereum: $4,000</span>
+            <span>Litecoin: $200</span> -->
+        </div>
+        <div class="copyright" style="text-align: center; margin-top: 3rem;">
+            <p>&copy; 2024 CyberFrontiers. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Animated Counters
+        const animateCounters = () => {
+            document.querySelectorAll('.stat-number').forEach(counter => {
+                const target = +counter.dataset.target;
+                const duration = 2000;
+                const start = Date.now();
+                
+                const update = () => {
+                    const elapsed = Date.now() - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    counter.textContent = Math.floor(progress * target);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.textContent = target + '+';
+                    }
+                };
+                
+                requestAnimationFrame(update);
+            });
+        };
+
+        // Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Fetch live crypto prices
+        const fetchCryptoPrices = async () => {
+            const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana&vs_currencies=usd';
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                document.getElementById('btc-price').textContent = `BTC: $${data.bitcoin.usd}`;
+                document.getElementById('eth-price').textContent = `ETH: $${data.ethereum.usd}`;
+                document.getElementById('bnb-price').textContent = `BNB: $${data.binancecoin.usd}`;
+                document.getElementById('sol-price').textContent = `SOL: $${data.solana.usd}`;
+            } catch (error) {
+                console.error('Error fetching crypto prices:', error);
+            }
+        };
+
+        // Call the function on page load
+        fetchCryptoPrices();
+
+        // Fetch real interest rates from Alpha Vantage
+        const fetchInterestRates = async () => {
+            const apiKey = 'DCN2ZCYW3TIB4MAO'; // Updated with the provided API key
+            const apiUrl = `https://www.alphavantage.co/query?function=FEDERAL_FUNDS_RATE&apikey=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data && data.data && data.data.length > 0) {
+                    const latestRate = data.data[0]; // Assuming the latest rate is the first entry
+
+                    document.getElementById('short-term-rate').textContent = `${latestRate.value}% APR`;
+                    document.getElementById('medium-term-rate').textContent = `${(parseFloat(latestRate.value) + 1.5).toFixed(1)}% APR`;
+                    document.getElementById('long-term-rate').textContent = `${(parseFloat(latestRate.value) + 3.3).toFixed(1)}% APR`;
+                } else {
+                    console.error('No data available for interest rates.');
+                }
+            } catch (error) {
+                console.error('Error fetching interest rates:', error);
+            }
+        };
+
+        // Call the function on page load
+        fetchInterestRates();
+
+        // Form Handling
+        document.getElementById('investment-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add form submission logic
+            alert('Thank you! Your investor package will be sent shortly.');
+        });
+    </script>
+</body>
+</html>

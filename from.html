@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumPay - Future of Transfers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #60efff;
+            --bg: #0a0a0a;
+        }
+
+        body {
+            background: var(--bg);
+            color: white;
+            overflow-x: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .navbar {
+            padding: 2rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .cta-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 30px;
+            color: var(--bg);
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .features {
+            padding: 5rem 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: grid;
+            place-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .currency-converter {
+            padding: 4rem 10%;
+            background: rgba(255,255,255,0.05);
+            margin: 2rem 0;
+        }
+
+        .converter-box {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            padding: 4rem 10%;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat h3 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .testimonials {
+            padding: 4rem 10%;
+        }
+
+        .testimonial-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1s;
+            backdrop-filter: blur(10px);
+        }
+
+        .scroll-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .light-mode {
+            --bg: #f0f0f0;
+            color: #0a0a0a;
+            --primary: #007bff;
+            --secondary: #6610f2;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .converter-box {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">QuantumPay</div>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <canvas class="particles" id="particles"></canvas>
+        <div class="hero-content">
+            <h1>Transcend Borders, Transfer Quantum</h1>
+            <p>Experience instant global transactions powered by quantum encryption technology. Send funds anywhere in the world in milliseconds.</p>
+            <button class="cta-btn">Get Started</button>
+        </div>
+    </section>
+
+    <div class="currency-converter">
+        <h3>Real-Time Converter</h3>
+        <div class="converter-box">
+            <input type="number" id="amount" placeholder="Amount">
+            <select id="from"></select>
+            <span>→</span>
+            <select id="to"></select>
+            <button id="convert">Convert</button>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <section class="stats">
+        <canvas class="particles" id="particles"></canvas>
+        <div class="stat">
+            <h3 data-count="500">0</h3>
+            <p>Transactions/sec</p>
+        </div>
+        <div class="stat">
+            <h3 data-count="180">0</h3>
+            <p>Supported Countries</p>
+        </div>
+        <div class="stat">
+            <h3 data-count="99.99">0</h3>
+            <p>Uptime %</p>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature-card">
+            <i class="fas fa-atom"></i>
+            <h3>Quantum Encryption</h3>
+            <p>Unbreakable security powered by quantum computing algorithms</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-globe"></i>
+            <h3>Global Network</h3>
+            <p>Connect with financial institutions worldwide instantly</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-bolt"></i>
+            <h3>Instant Settlement</h3>
+            <p>Transactions completed in 0.003 seconds guaranteed</p>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <h2>Quantum Experiences</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <div class="user">
+                    <div class="avatar"></div>
+                    <h4>Alex Quantum</h4>
+                </div>
+                <p>"This platform revolutionized our international transactions!"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="user">
+                    <div class="avatar"></div>
+                    <h4>Sarah Photon</h4>
+                </div>
+                <p>"Never seen such fast settlement times in my career."</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="user">
+                    <div class="avatar"></div>
+                    <h4>James Neutron</h4>
+                </div>
+                <p>"The security features give us complete peace of mind."</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Particle Animation
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 0.5,
+                    y: (Math.random() - 0.5) * 0.5
+                };
+                this.alpha = Math.random() * 0.5 + 0.5;
+                this.radius = Math.random() * 2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(96, 239, 255, ${this.alpha})`;
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                
+                if (this.x < 0 || this.x > canvas.width ||
+                    this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+                this.draw();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => particle.update());
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        // Feature Card Animation
+        const cards = document.querySelectorAll('.feature-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                card.style.transform = `
+                    perspective(1000px)
+                    rotateX(${(y - rect.height/2) / 10}deg)
+                    rotateY(${-(x - rect.width/2) / 10}deg)
+                    translateY(-10px)
+                `;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+        });
+
+        // Loading Animation
+        window.addEventListener('load', () => {
+            const loader = document.createElement('div');
+            loader.className = 'loader';
+            loader.innerHTML = `<div class="spinner"></div>`;
+            document.body.prepend(loader);
+            setTimeout(() => loader.remove(), 2000);
+        });
+
+        // Theme Toggle
+        const themeToggle = document.createElement('div');
+        themeToggle.className = 'theme-toggle';
+        themeToggle.innerHTML = '<i class="fas fa-adjust"></i>';
+        document.body.appendChild(themeToggle);
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            themeToggle.querySelector('i').classList.toggle('fa-sun');
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Currency Converter
+        async function fetchCurrencies() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const data = await response.json();
+                const currencies = Object.keys(data.rates);
+                
+                currencies.forEach(currency => {
+                    const option1 = document.createElement('option');
+                    const option2 = document.createElement('option');
+                    option1.value = option2.value = currency;
+                    option1.textContent = option2.textContent = currency;
+                    document.getElementById('from').appendChild(option1);
+                    document.getElementById('to').appendChild(option2);
+                });
+            } catch (error) {
+                console.error('Error fetching currencies:', error);
+            }
+        }
+        fetchCurrencies();
+
+        document.getElementById('convert').addEventListener('click', async () => {
+            const amount = document.getElementById('amount').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+
+            try {
+                const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${from}`);
+                const data = await response.json();
+                const rate = data.rates[to];
+                const result = (amount * rate).toFixed(2);
+                document.getElementById('result').textContent = `${amount} ${from} = ${result} ${to}`;
+            } catch (error) {
+                console.error('Conversion error:', error);
+            }
+        });
+
+        // Statistics Counters
+        const stats = document.querySelectorAll('.stat h3');
+        stats.forEach(stat => {
+            const target = +stat.dataset.count;
+            const increment = target / 100;
+            let current = 0;
+
+            const updateCounter = () => {
+                if(current < target) {
+                    current += increment;
+                    stat.textContent = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    stat.textContent = target;
+                }
+            }
+
+            const observer = new IntersectionObserver(entries => {
+                if(entries[0].isIntersecting) {
+                    updateCounter();
+                }
+            });
+
+            observer.observe(stat);
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat, .testimonial-card').forEach(el => {
+            el.classList.add('scroll-animation');
+            scrollObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
